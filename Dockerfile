@@ -9,16 +9,16 @@ RUN go mod download
 
 COPY . .
 
-RUN go build -o /bg-back
+RUN CGO_ENABLED=0 go build -o /bg-back
 
-## production container
+# ## production container
 FROM scratch
 
-WORKDIR /
+WORKDIR /app
 
-COPY --from=build /app/.env.example /.env
-COPY --from=build /bg-back /bg-back
+COPY --from=build /app/.env.example /app/.env
+COPY --from=build /bg-back /app/bg-back
 
 EXPOSE 8080
 
-ENTRYPOINT ["/bg-back"]
+CMD ["/app/bg-back"]
