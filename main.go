@@ -1,7 +1,6 @@
 package main
 
 import (
-	"log"
 	"os"
 
 	"github.com/mahaupt/bg-back/controller"
@@ -11,21 +10,17 @@ import (
 )
 
 func main() {
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatalf("Error loading .env file")
-	}
+	// if failed, assume env variables are set manually
+	godotenv.Load()
 
 	gin.SetMode(os.Getenv("GIN_MODE"))
 	r := gin.New()
 	r.Use(gin.Logger())
 	r.Use(gin.Recovery())
 
-	v1 := r.Group("/v1")
-	{
-		mc := new(controller.MessageController)
-		v1.GET("/send", mc.SendMessage)
-	}
+	mc := new(controller.MessageController)
+	r.GET("/v1/send", mc.SendMessage)
+	r.GET("/health", mc.GetHealth)
 
 	r.Run()
 }

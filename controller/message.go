@@ -40,3 +40,9 @@ func (m *MessageController) SendMessage(c *gin.Context) {
 		"message": msg.Message,
 	})
 }
+
+func (m *MessageController) GetHealth(c *gin.Context) {
+	c.JSON(200, gin.H{
+		"health": "ok",
+	})
+}
