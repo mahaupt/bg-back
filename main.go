@@ -15,7 +15,9 @@ func main() {
 
 	gin.SetMode(os.Getenv("GIN_MODE"))
 	r := gin.New()
-	r.Use(gin.Logger())
+	r.Use(gin.LoggerWithConfig(gin.LoggerConfig{
+		SkipPaths: []string{"/health"},
+	}))
 	r.Use(gin.Recovery())
 
 	mc := new(controller.MessageController)
