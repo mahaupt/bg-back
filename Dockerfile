@@ -16,6 +16,7 @@ FROM scratch
 
 WORKDIR /app
 
+COPY --from=build /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 COPY --from=build /app/.env.example /app/.env
 COPY --from=build /bg-back /app/bg-back
 
