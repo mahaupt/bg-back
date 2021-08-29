@@ -20,6 +20,5 @@ COPY --from=build /app/.env.example /.env
 COPY --from=build /bg-back /bg-back
 
 EXPOSE 8080
-USER nonroot:nonroot
 
 ENTRYPOINT ["/bg-back"]
